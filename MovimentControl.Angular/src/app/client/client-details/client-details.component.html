@@ -1,0 +1,172 @@
+<body class="container">
+    <div>
+        <client-title [title]="title"></client-title>
+    </div>
+    <form class="border m-4 p-5" [formGroup]="clientForm">
+        <div class="row g-2">
+            <div class="col-md">
+                <div class="form-floating p-2">
+
+                    <input type="text" class="form-control" readonly="readonly" id="form-control-name"
+                        formControlName="fullName" style="height: 60px " placeholder="Name">
+                    <label for="form-control-name">Nome</label>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-floating p-2 pt-2">
+
+                    <input type="text" class="form-control" readonly="readonly" id="form-control-cep"
+                        formControlName="cep" mask="00000-000" style="height: 60px " placeholder="CEP">
+                    <label for="form-control-cep">CEP</label>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-floating p-2">
+
+                    <input type="text" class="form-control" mask="000.000.000-00" readonly="readonly"
+                        id="form-control-cpf" formControlName="cpf" style="height:560x" placeholder="CPF">
+                    <label for="form-control-cpf">CPF</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-2">
+            <div class="col-md-3">
+
+                <div class="form-floating p-2 me-5">
+
+                    <input type="text" class="form-control" readonly="readonly" id="form-control-city"
+                        formControlName="city" style="height: 60px " placeholder="City">
+                    <label for="form-control-city">Cidade</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating ms-5 p-2">
+                    <input type="text" class="form-control" readonly="readonly" id="form-control-email"
+                        formControlName="email" style="height:560x;" placeholder="Email">
+                    <label for="form-control-email">Email</label>
+                </div>
+
+            </div>
+            <div class="col-md-5">
+                <div class="form-floating p-2 ms-5">
+
+                    <input type="text" class="form-control" readonly="readonly" id="form-control-address"
+                        formControlName="address" style="height:560x" placeholder="Address">
+                    <label for="form-control-address">Endereço</label>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row g-2">
+            <div class="col-md">
+                <div class="form-floating p-2">
+                    <input type="text" class="form-control" mask="00.000.000-00" readonly="readonly"
+                        id="form-control-rg" formControlName="rg" style="height: 60px " placeholder="RG">
+                    <label for="form-control-rg">RG</label>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-floating p-2">
+
+                    <input type="text" class="form-control" readonly="readonly" r id="form-control-state"
+                        formControlName="state" style="height: 60px " placeholder="State">
+                    <label for="form-control-state">Estado</label>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-floating p-2">
+                    <input type="text" class="form-control" readonly="readonly" id="form-control-district"
+                        formControlName="district" style="height: 60px " placeholder="District">
+                    <label for="form-control-district">Bairro</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-2">
+            <div class="col-md-3">
+                <fieldset disabled class="form-floating me-5 p-2">
+                    <select type="text" readonly="readonly" class="form-control" id="form-control-service"
+                        style="height: 60px" formControlName="service" aria-label="Services">
+                        <option value="1">Acupuntura</option>
+                        <option value="2">Fisioterapia</option>
+                        <option value="3">RPG</option>
+                    </select>
+                    <label for="form-control-service" class="form-label">Service</label>
+                </fieldset>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="form-floating ms-5 p-2">
+                    <input type="tel" class="form-control" mask="(00)00000-0000" readonly="readonly"
+                        id="form-control-phone" formControlName="phone" style="height: 60px" placeholder="Phone">
+                    <label for="form-control-phone">Telefone</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating ms-5 p-2">
+                    <input type="text" class="form-control" readonly="readonly" id="form-control-career"
+                        formControlName="career" style="height: 60px " placeholder="Career">
+                    <label for="form-control-career">Profissão</label>
+                </div>
+            </div>
+        </div>
+        <div class="row g-2">
+            <div class="col-md-3">
+
+                <fieldset class="form-floating p-2" disabled="disabled">
+                    <select type="text" class="form-control" formControlName="mCivil" id="form-control-civilstatus"
+                        style="height: 60px" aria-label="Civil Status">
+                        <option value="1">Solteiro</option>
+                        <option value="2">Casado</option>
+                    </select>
+                    <label for="form-control-civilstatus" class="form-label">Estado Civil</label>
+                </fieldset>
+            </div>
+            <div class="col-md-3 ">
+                <fieldset class="form-floating p-2" disabled="disabled">
+                    <select type="text" class="form-control" id="form-control-healthI" formControlName="healthI"
+                        style="height: 60px">
+                        <option value="1">Bradesco</option>
+                        <option value="2">Cassi</option>
+                        <option value="3">Vitalmed</option>
+                        <option value="4">Hapvida</option>
+                        <option value="5">SulAmerica</option>
+                        <option value="6">Unimed</option>
+                    </select>
+
+                    <label for="form-control-healthI" class="form-label">Plano de Saúde</label>
+                </fieldset>
+            </div>
+            <div class="col-md-3">
+                <fieldset disabled="disabled" class="form-floating p-2">
+                    <select type="text" class="form-control" readonly="readonly" id="form-control-gender"
+                        formControlName="gender" style="height: 60px" aria-label="Gender">
+                        <option value="1">Masculino</option>
+                        <option value="2">Feminino</option>
+                    </select>
+                    <label for="form-control-gender" class="form-label">Gênero</label>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="row g-2">
+            <div class="col-md">
+                <div class="form-floating p-2">
+                    <input type="text" class="form-control" readonly="readonly" id="form-control-input-details"
+                        formControlName="details" style="height: 100px " placeholder="Details">
+                    <label for="form-control-details">Detalhes</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md">
+
+            <button class="btn btn-danger" routerLink="/client">Cancelar</button>
+        </div>
+
+    </form>
+
+</body>

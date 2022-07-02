@@ -1,0 +1,239 @@
+<body class="container">
+
+    <div>
+        <client-title [title]="title"></client-title>
+    </div>
+    <form class="border m-4 p-5" [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+        <div class="row g-2">
+            <div class="col-md">
+                <div class="form-floating p-2">
+
+                    <input type="text" class="form-control" id="form-control-input-name" formControlName="fullName"
+                        style="height: 60px " placeholder="Name" maxlength="50"
+                        [ngClass]="{'is-invalid': submitted && f['fullName'].errors}">
+                    <label for="form-control-input-name">Nome</label>
+                    <div class="invalid-feedback" *ngIf="submitted && f['fullName'].errors">
+                        <div *ngIf=" submitted && f['fullName'].errors['required']"> O nome é obrigatório</div>
+                    </div>
+                    
+
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-floating p-2 pt-2">
+
+                    <input type="text" class="form-control" id="form-control-input-cep" (blur)="searchCep()"
+                        formControlName="cep" style="height: 60px " mask="00000-000" placeholder="CEP"
+                        [ngClass]="{'is-invalid' : submitted && f['cep'].errors,'invalid-cpf': isValid}">
+                    <label for="form-control-input-cep">CEP</label>
+                    <div class="invalid-feedback" *ngIf="submitted && f['cep'].errors">
+                        <div *ngIf="submitted && f['cep'].errors['required']">O cep é obrigatório</div>
+                        <div *ngIf="submitted && f['cep'].errors['minlength']">O cep deve ter 8 caracteres</div>
+                    </div>
+                    <div class="text-danger" *ngIf="!isValid" >
+                        <div *ngIf="!isValid">O cep é Invalido</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-floating p-2">
+
+                    <input type="text" class="form-control" id="form-control-input-cpf" mask="000.000.000-00"
+                        formControlName="cpf" style="height: 60px " placeholder="CPF"
+                        [ngClass]="{'is-invalid': submitted && f['cpf'].errors}">
+                    <label for="form-control-input-cpf">CPF</label>
+                    <div class="invalid-feedback" *ngIf="submitted && f['cpf'].errors">
+                        <div *ngIf="submitted && f['cpf'].errors['required']"> O cpf é obrigatório</div>
+
+                        <div *ngIf="submitted && f['cpf'].errors['minlength']">O cpf deve ter 11 caracteres</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-2">
+            <div class="col-md-3">
+
+                <div class="form-floating p-2 me-5">
+
+                    <input type="text" class="form-control" readonly="readonly" id="form-control-input-city"
+                        formControlName="city" style="height: 60px " placeholder="City">
+                    <label for="form-control-input-city">Cidade</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating ms-5 p-2">
+                    <input type="text" class="form-control" id="form-control-input-email" formControlName="email"
+                        style="height: 60px " maxlength="30" placeholder="Email"
+                        [ngClass]="{'is-invalid': submitted && f['email'].errors}">
+                    <label for="form-control-input-email">Email</label>
+                    <div class="invalid-feedback" *ngIf="submitted && f['email'].errors">
+                        <div *ngIf="submitted && f['email'].errors['required']">O email é obrigatório</div>
+                        <div *ngIf="submitted && f['email'].errors['email']">O valor digitado não é um E-mail</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-floating p-2 ms-5">
+                    <input type="text" class="form-control" readonly="readonly" id="form-control-input-address"
+                        formControlName="address" style="height: 60px " placeholder="Address">
+                    <label for="form-control-input-address">Endereço</label>
+                </div>
+            </div>
+
+        </div>
+        <div class="row g-2">
+            <div class="col-md">
+                <div class="form-floating p-2">
+
+                    <input type="text" class="form-control" id="form-control-input-rg" formControlName="rg"
+                        style="height: 60px " mask="00.000.000-00" placeholder="RG"
+                        [ngClass]="{'is-invalid': submitted && f['rg'].errors}">
+                    <label for="form-control-input-rg">RG</label>
+                    <div class="invalid-feedback" *ngIf="submitted && f['rg'].errors">
+                        <div *ngIf="submitted && f['rg'].errors['required']">O RG é obrigatório</div>
+                        <div *ngIf="submitted && f['rg'].errors['minlength']">O rg deve ter 10 caracteres</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-floating p-2">
+                    <input type="text" class="form-control" readonly="readonly" id="form-control-input-state"
+                        formControlName="state" style="height: 60px " placeholder="State">
+                    <label for="form-control-input-state">Estado</label>
+                </div>
+
+            </div>
+            <div class="col-md">
+                <div class="form-floating p-2">
+                    <input type="text" class="form-control" readonly="readonly" id="form-control-input-district"
+                        formControlName="district" style="height: 60px" placeholder="District">
+                    <label for="form-control-input-district">Bairro</label>
+                </div>
+            </div>
+        </div>
+        <div class="row g-2">
+            <div class="col-md-3">
+                <div class="form-floating me-5 p-2">
+                    <select class="form-select" id="form-select-service" style="height: 60px" formControlName="service"
+                        aria-label="Services" [ngClass]="{'is-invalid': submitted && f['service'].errors}">
+
+                        <option selected value="1">Acupuntura</option>
+                        <option value="2">Fisioterapia</option>
+                        <option value="3">RPG</option>
+                    </select>
+                    <label for="form-select-service" class="form-label">Serviços</label>
+                    <div class="invalid-feedback" *ngIf="submitted && f['service'].errors">
+
+                        <div *ngIf="submitted && f['service'].errors['required']">Escolha uma das opções de Serviço
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating ms-5 p-2">
+                    <input type="text" class="form-control" id="form-control-input-phone" formControlName="phone"
+                        style="height: 58px " mask="(00)00000-0000" placeholder="Phone"
+                        [ngClass]="{'is-invalid': submitted && f['phone'].errors}">
+                    <label for="form-control-input-phone">Telefone</label>
+                    <div class="invalid-feedback" *ngIf="submitted && f['phone'].errors">
+                        <div *ngIf="submitted && f['phone'].errors['required']">O Telefone é obrigatório</div>
+                        <div *ngIf="submitted && f['phone'].errors['minlength']">O Telefone deve ter 11 caracteres</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating ms-5 p-2">
+                    <input type="text" class="form-control" id="form-control-input-career" formControlName="career"
+                        style="height: 60px" maxlength="20" placeholder="Career"
+                        [ngClass]="{'is-invalid':submitted && f['career'].errors}">
+                    <label for="form-control-input-career">Profissão</label>
+                    <div class="invalid-feedback" *ngIf="submitted && f['career'].errors">
+                        <div *ngIf="submitted && f['career'].errors['required']">A profissão é obrigatória</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-2">
+            <div class="col-md-3">
+                <div class="form-floating p-2">
+                    <select class="form-select" id="form-select-civilstatus" formControlName="mCivil"
+                        style="height: 60px" aria-label="Civil Status"
+                        [ngClass]="{'is-invalid':submitted && f['mCivil'].errors}">
+                        <option selected value="1">Solteiro</option>
+                        <option value="2">Casado</option>
+                    </select>
+                    <label for="form-select-civilstatus" class="form-label">Estado Civil</label>
+                    <div class="invalid-feedback" *ngIf="submitted && f['mCivil'].errors">
+                        <div *ngIf="submitted && f['mCivil'].errors['required']">Escolha seu estado civil atual </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 ">
+                <div class="form-floating p-2">
+                    <select class="form-select" id="form-select-healthI" formControlName="healthI" style="height: 60px"
+                        aria-label="Health Insurances" [ngClass]="{'is-invalid': submitted && f['healthI'].errors}">
+                        <option selected value="1">Bradesco</option>
+                        <option value="2">Cassi</option>
+                        <option value="3">Vitalmed</option>
+                        <option value="4">Hapvida</option>
+                        <option value="5">SulAmerica</option>
+                        <option value="6">Unimed</option>
+
+                    </select>
+                    <label for="form-select-healthI" class="form-label">Plano de Saúde</label>
+                    <div class="invalid-feedback" *ngIf="submitted && f['healthI'].errors">
+                        <div *ngIf="submitted && f['healthI'].errors['required']">Escolha o seu plano de saúde atual
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-floating p-2">
+                    <select class="form-select" id="form-select-gender" formControlName="gender" style="height: 60px"
+                        aria-label="Gender" [ngClass]="{'is-invalid': submitted && f['gender'].errors}">
+                        <option selected value="1">Masculino</option>
+                        <option value="2">Feminino</option>    
+                    </select>
+                    <label for="form-select-gender" class="form-label">Gênero</label>
+                    <div class="invalid-feedback" *ngIf="submitted && f['gender'].errors">
+                        <div *ngIf="submitted && f['gender'].errors['required']">Escolha um dos gêneros acima</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-2">
+            <div class="col-md">
+                <div class="form-floating p-2">
+                    <input type="text" class="form-control" id="form-control-input-details" formControlName="details"
+                        style="height: 100px " maxlength="100" placeholder="Details"
+                        [ngClass]="{'is-invalid': submitted && f['details'].errors}">
+                    <label for="form-control-input-details">Detalhes</label>
+                    <div class="invalid-feedback" *ngIf="submitted && f['details'].errors">
+
+                        <div *ngIf="submitted && f['details'].errors['required']">Os detalhes são obrigatórios</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-2">
+            <div class="col-md">
+                <button [disabled]="loading" [disabled]="!clientForm.valid" class="btn btn-primary"><span
+                        *ngIf="loading" class="spinner-border spinner-border-sm mr-1">
+                    </span>
+                    Enviar
+                </button>
+            </div>
+            <div class="col-md">
+                <button class="btn btn-danger" routerLink='/client'>
+                    Cancelar
+                </button>
+            </div>
+
+        </div>
+    </form>
+</body>
