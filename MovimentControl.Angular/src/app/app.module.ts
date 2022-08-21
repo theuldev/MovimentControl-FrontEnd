@@ -6,20 +6,22 @@ import { AppComponent } from './app.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxMaskModule } from 'ngx-mask';
-
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { Login2faComponent } from './client/login2fa/login2fa.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [AppComponent],
+  declarations: [AppComponent, Login2faComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    ModalModule.forRoot(),
   ],
-  providers: [],
+   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent],
 })
-
 export class AppModule {}

@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import {
   UntypedFormBuilder,
-  UntypedFormGroup,
   Validators,
-  ReactiveFormsModule,
   FormGroup,
+  FormBuilder,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs';
 import { Client } from 'src/app/shared/models/Client';
 import { CepApiService } from 'src/app/shared/services/cep-api.service';
 import { ClientService } from '../../shared/services/client.service';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'client-client-create-edit',
@@ -19,7 +19,6 @@ import { ClientService } from '../../shared/services/client.service';
 })
 export class ClientCreateEditComponent implements OnInit {
   clientForm!: FormGroup;
-  title!: string;
   isAddMode!: boolean;
   loading = false;
   submitted = false;
@@ -28,7 +27,7 @@ export class ClientCreateEditComponent implements OnInit {
 
   constructor(
     private clientService: ClientService,
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private cepService: CepApiService
@@ -37,8 +36,8 @@ export class ClientCreateEditComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
+
     if (!this.isAddMode) {
-      this.title = 'Atualizar';
       this.clientService
         .getById(this.id)
         .pipe(first())
@@ -46,12 +45,9 @@ export class ClientCreateEditComponent implements OnInit {
           next: (client) => {
             this.clientForm.patchValue(client);
           },
-          error: (err) => console.error(err),
+          error: (err) => console.log(err),
         });
-    } else {
-      this.title = 'Criar';
     }
-
     this.clientForm = this.fb.group({
       id: [this.id],
       fullName: ['', [Validators.required, Validators.maxLength(50)]],
@@ -96,7 +92,7 @@ export class ClientCreateEditComponent implements OnInit {
             this.isValid = true;
           }
         },
-        error: (err) => console.error(err),
+        error: (err) => console.log(err),
       });
     }
   }
@@ -128,11 +124,12 @@ export class ClientCreateEditComponent implements OnInit {
       .subscribe({
         next: (success) => {
           console.log(success);
-          this.router.navigateByUrl('/client');
+          this.router.navigateByUrl('/client/dashboard');
         },
         error: (err) => {
-          if (err.status == 500) {
-            console.error(err.error);
+          if (err.status >= 400) {
+            console.log(err);
+            this.router.navigateByUrl('/');
           }
         },
       })
@@ -145,15 +142,12 @@ export class ClientCreateEditComponent implements OnInit {
       .subscribe({
         next: (success) => {
           console.log(success);
-          this.router.navigateByUrl('/client');
+          this.router.navigateByUrl('/client/dashboard');
         },
         error: (err) => {
-          if (err.status == 500) {
-            console.error(err.error);
-          } else if (err.status == 403) {
-            console.error(err.error.message);
-          } else if (err.status == 400) {
-            console.error(err.error.message);
+          if (err.status >= 400) {
+            console.log(err);
+            this.router.navigateByUrl('/');
           }
         },
       })

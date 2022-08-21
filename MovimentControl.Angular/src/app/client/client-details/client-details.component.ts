@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {
   UntypedFormBuilder,
-  UntypedFormGroup,
-  Validators,
-  ReactiveFormsModule,
   FormGroup,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs';
-import { Client } from 'src/app/shared/models/Client';
 import { ClientService } from '../../shared/services/client.service';
 
 @Component({
@@ -18,7 +14,6 @@ import { ClientService } from '../../shared/services/client.service';
 })
 export class ClientDetailsComponent implements OnInit {
   public clientForm!: FormGroup;
-  public title = 'Detalhes';
   constructor(
     private clientService: ClientService,
     private fb: UntypedFormBuilder,
@@ -35,8 +30,12 @@ export class ClientDetailsComponent implements OnInit {
         next: (client) => {
           this.clientForm.patchValue(client);
         },
-        error: (err) => console.error(err.message),
-        
+        error: (err) =>{ 
+       if (err.status >= 400) {
+            console.log(err);
+            this.router.navigateByUrl('/');
+          }
+        }
       });
 
     this.clientForm = this.fb.group({
